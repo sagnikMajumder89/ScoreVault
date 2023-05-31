@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "711929761707",
+    "project_id": "badam-saath",
+    "storage_bucket": "badam-saath.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:711929761707:android:71baadb4a90386a7f78cee",
+        "android_client_info": {
+          "package_name": "com.example.badam_saath"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "711929761707-rdn5r1vrmkp4eijigatf1tddvbn0ae91.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAHBLUfKEJEP25EvuwsIZ87ufRrOFUS0qo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "711929761707-rdn5r1vrmkp4eijigatf1tddvbn0ae91.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "711929761707-tb9u09u0oj7cvkqr0fp9s37llfpodh7f.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.badamSaath"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
