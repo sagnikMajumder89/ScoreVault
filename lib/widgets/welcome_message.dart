@@ -40,15 +40,6 @@ class _WelcomeMessageState extends State<WelcomeMessage> {
           ),
           fit: BoxFit.cover,
         ),
-        // borderRadius: BorderRadius.all(Radius.circular(12)),
-        // gradient: LinearGradient(
-        //   colors: [
-        //     Color.fromARGB(255, 127, 130, 235),
-        //     Color.fromARGB(255, 84, 169, 219),
-        //   ],
-        //   begin: Alignment.topLeft,
-        //   end: Alignment.bottomRight,
-        // ),
       ),
       alignment: Alignment.bottomCenter,
       height: MediaQuery.of(context).size.height * 0.27,

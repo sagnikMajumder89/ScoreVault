@@ -22,6 +22,10 @@ class _GameScreenState extends State<GameScreen> {
         });
   }
 
+  void signOutCall() {
+    FirebaseAuth.instance.signOut();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -39,7 +43,7 @@ class _GameScreenState extends State<GameScreen> {
           actions: [
             IconButton(onPressed: _showModalSheet, icon: const Icon(Icons.add)),
             IconButton(
-              onPressed: () => FirebaseAuth.instance.signOut(),
+              onPressed: signOutCall,
               icon: const Icon(Icons.logout),
             )
           ],
@@ -47,11 +51,9 @@ class _GameScreenState extends State<GameScreen> {
         body: SingleChildScrollView(
           child: Column(
             mainAxisSize: MainAxisSize.min,
-            children: [
-              const WelcomeMessage(),
-              GameTiles(
-                key: UniqueKey(),
-              ),
+            children: const [
+              WelcomeMessage(),
+              GameTiles(),
             ],
           ),
         ));

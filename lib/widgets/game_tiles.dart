@@ -20,6 +20,10 @@ class _GameTilesState extends State<GameTiles> {
     retrieveUsername();
   }
 
+  void deleteUsername() {
+    username = '';
+  }
+
   void retrieveUsername() async {
     final doC = await _cloud
         .collection('users')

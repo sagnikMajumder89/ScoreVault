@@ -32,6 +32,8 @@ class _ModalState extends State<Modal> {
     for (var doc in snapshots.docs) {
       if (doc.data()['userid'] != _userId) {
         users.add(doc.data()['username']);
+      } else {
+        addedusers.add(doc.data()['username']);
       }
     }
     if (context.mounted) {

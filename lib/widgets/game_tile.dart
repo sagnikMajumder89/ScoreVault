@@ -1,3 +1,4 @@
+import 'package:badam_saath/screen/game_tile_screen.dart';
 import 'package:flutter/material.dart';
 
 class GameTile extends StatefulWidget {
@@ -13,7 +14,7 @@ class _GameTileState extends State<GameTile> {
     final gametitle = widget.gameData['gametitle'];
     return Card(
       elevation: 2,
-      color: Color.fromARGB(219, 226, 197, 253),
+      color: const Color.fromARGB(219, 226, 197, 253),
       child: ListTile(
         title: Text(
           gametitle,
@@ -22,7 +23,17 @@ class _GameTileState extends State<GameTile> {
               .bodyLarge!
               .copyWith(fontWeight: FontWeight.bold, fontSize: 17),
         ),
-        subtitle: Text('Game played by the Boyz'),
+        subtitle: const Text('Game played by the Boyz'),
+        onTap: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (ctx) => GameTileScreen(
+                gameData: widget.gameData,
+              ),
+            ),
+          );
+        },
       ),
     );
   }
