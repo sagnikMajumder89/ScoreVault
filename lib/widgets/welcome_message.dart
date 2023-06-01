@@ -47,17 +47,17 @@ class _WelcomeMessageState extends State<WelcomeMessage> {
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          CircleAvatar(
-            radius: 62,
-            backgroundColor: Color.fromARGB(225, 151, 116, 240),
-            child: ClipOval(
-              child: SizedBox(
-                width: 120,
-                height: 120,
-                child: ImageInput(),
-              ),
-            ),
-          ),
+          // CircleAvatar(
+          //   radius: 62,
+          //   backgroundColor: Color.fromARGB(225, 151, 116, 240),
+          //   child: ClipOval(
+          //     child: SizedBox(
+          //       width: 120,
+          //       height: 120,
+          //       child: ImageInput(),
+          //     ),
+          //   ),
+          // ),
           const SizedBox(
             height: 12,
           ),

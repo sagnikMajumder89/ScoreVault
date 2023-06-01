@@ -1,8 +1,10 @@
 import 'package:badam_saath/screen/authentication/login_screen.dart';
+import 'package:badam_saath/widgets/image_input.dart';
 import 'package:badam_saath/widgets/splash.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'dart:io';
 
 class SignUpScreen extends StatefulWidget {
   const SignUpScreen({super.key});
@@ -15,32 +17,57 @@ class _SignUpScreenState extends State<SignUpScreen> {
   var enteredEmail = '';
   var enteredPassword = '';
   var enteredUsername = '';
+  File? _selectedImage;
   var isAuthentication = false;
   final _formKey = GlobalKey<FormState>();
+  void onSelectImage(File? image) {
+    if (image == null) return;
+    _selectedImage = image;
+  }
+
   void submitData() async {
-    if (!_formKey.currentState!.validate()) {
+    // if (!_formKey.currentState!.validate()) {
+    //   return;
+    // }
+    if (_selectedImage == null) {
+      await showDialog(
+          context: context,
+          builder: (ctx) {
+            return AlertDialog(
+              title: const Text('Error'),
+              content: const Text(
+                'Please also add your Image',
+              ),
+              actions: [
+                TextButton(
+                  onPressed: () => Navigator.of(context).pop(),
+                  child: Text('Okay'),
+                ),
+              ],
+            );
+          });
       return;
     }
     _formKey.currentState!.save();
     setState(() {
       isAuthentication = true;
     });
-    try {
-      await FirebaseAuth.instance.createUserWithEmailAndPassword(
-          email: enteredEmail, password: enteredPassword);
-      await FirebaseFirestore.instance
-          .collection('users')
-          .doc(FirebaseAuth.instance.currentUser!.uid)
-          .set({
-        'username': enteredUsername,
-        'email': enteredEmail,
-        'userid': FirebaseAuth.instance.currentUser!.uid
-      });
-    } on FirebaseAuthException catch (error) {
-      ScaffoldMessenger.of(context).clearSnackBars();
-      ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text(error.message ?? "Authentication error")));
-    }
+    // try {
+    //   await FirebaseAuth.instance.createUserWithEmailAndPassword(
+    //       email: enteredEmail, password: enteredPassword);
+    //   await FirebaseFirestore.instance
+    //       .collection('users')
+    //       .doc(FirebaseAuth.instance.currentUser!.uid)
+    //       .set({
+    //     'username': enteredUsername,
+    //     'email': enteredEmail,
+    //     'userid': FirebaseAuth.instance.currentUser!.uid
+    //   });
+    // } on FirebaseAuthException catch (error) {
+    //   ScaffoldMessenger.of(context).clearSnackBars();
+    //   ScaffoldMessenger.of(context).showSnackBar(
+    //       SnackBar(content: Text(error.message ?? "Authentication error")));
+    // }
     setState(() {
       isAuthentication = false;
     });
@@ -84,6 +111,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           .textTheme
                           .bodyLarge!
                           .copyWith(fontSize: 17),
+                    ),
+                    ImageInput(
+                      imageSelected: onSelectImage,
                     ),
                     Form(
                       key: _formKey,
