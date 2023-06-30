@@ -1,8 +1,8 @@
-import 'package:badam_saath/widgets/image_input.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 
 class WelcomeMessage extends StatefulWidget {
   const WelcomeMessage({super.key});
@@ -11,11 +11,11 @@ class WelcomeMessage extends StatefulWidget {
   State<WelcomeMessage> createState() => _WelcomeMessageState();
 }
 
-final _cloud = FirebaseFirestore.instance;
-
 class _WelcomeMessageState extends State<WelcomeMessage> {
+  final _cloud = FirebaseFirestore.instance;
   var username = 'User';
-
+  final userId = FirebaseAuth.instance.currentUser!.uid;
+  String? imageLink;
   Future<void> _fetchUsername() async {
     final userId = FirebaseAuth.instance.currentUser!.uid;
     final snapshot = await _cloud.collection('users').get();
@@ -29,9 +29,16 @@ class _WelcomeMessageState extends State<WelcomeMessage> {
     }
   }
 
+  void _getImage() async {
+    final storageRef =
+        FirebaseStorage.instance.ref().child('userimage').child('$userId.jpg');
+    imageLink = await storageRef.getDownloadURL();
+  }
+
   @override
   Widget build(BuildContext context) {
     _fetchUsername();
+    _getImage();
     return Container(
       decoration: const BoxDecoration(
         image: DecorationImage(
@@ -47,17 +54,13 @@ class _WelcomeMessageState extends State<WelcomeMessage> {
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          // CircleAvatar(
-          //   radius: 62,
-          //   backgroundColor: Color.fromARGB(225, 151, 116, 240),
-          //   child: ClipOval(
-          //     child: SizedBox(
-          //       width: 120,
-          //       height: 120,
-          //       child: ImageInput(),
-          //     ),
-          //   ),
-          // ),
+          CircleAvatar(
+            radius: 60,
+            backgroundImage: imageLink != null
+                ? NetworkImage(imageLink!)
+                : const AssetImage('assets/images/usericon.png')
+                    as ImageProvider,
+          ),
           const SizedBox(
             height: 12,
           ),

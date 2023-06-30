@@ -42,6 +42,7 @@ dependencies:
   uuid: ^3.0.7
   image_picker: ^0.8.7+5
   flutter_riverpod: ^2.3.6
+  firebase_storage: ^11.2.2
 
 dev_dependencies:
   flutter_test:
@@ -70,6 +71,7 @@ flutter:
     - assets/images/loadingGif.gif
     - assets/images/title.png
     - assets/images/gamescreenback.png
+    - assets/images/usericon.png
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see

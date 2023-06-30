@@ -4,9 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:numberpicker/numberpicker.dart';
 
-final _cloud = FirebaseFirestore.instance;
-final _userId = FirebaseAuth.instance.currentUser!.uid;
-
 class Modal extends StatefulWidget {
   const Modal({super.key});
 
@@ -15,13 +12,15 @@ class Modal extends StatefulWidget {
 }
 
 class _ModalState extends State<Modal> {
+  final _cloud = FirebaseFirestore.instance;
+  final _userId = FirebaseAuth.instance.currentUser!.uid;
   final enteredTitle = TextEditingController();
   var _isUploading = false;
   int _noOfPlayers = 5;
   List<String> users = [];
-  List<String> addedusers = [];
+  List<Map<String, dynamic>> addedusers = [];
   void addUsersToaddedUsers(String userN) {
-    addedusers.add(userN);
+    addedusers.add({'username': userN, 'scores': 0});
   }
 
   void _addGame() async {
@@ -33,7 +32,7 @@ class _ModalState extends State<Modal> {
       if (doc.data()['userid'] != _userId) {
         users.add(doc.data()['username']);
       } else {
-        addedusers.add(doc.data()['username']);
+        addedusers.add({'username': doc.data()['username'], 'scores': 0});
       }
     }
     if (context.mounted) {
@@ -59,7 +58,7 @@ class _ModalState extends State<Modal> {
       'gametitle': enteredTitle.text,
       'noofplayers': _noOfPlayers,
       'listofusers': addedusers,
-      'createdat': Timestamp.now()
+      'createdat': Timestamp.now(),
     });
     setState(() {
       _isUploading = false;
@@ -79,6 +78,7 @@ class _ModalState extends State<Modal> {
             Padding(
               padding: const EdgeInsets.all(10),
               child: TextField(
+                maxLength: 10,
                 autofocus: true,
                 decoration:
                     const InputDecoration(labelText: 'Enter Game Title'),

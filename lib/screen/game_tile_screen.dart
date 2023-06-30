@@ -1,4 +1,5 @@
 import 'package:badam_saath/widgets/game_tile_screen/player_stats.dart';
+import 'package:badam_saath/widgets/game_tile_screen/score_updater.dart';
 import 'package:flutter/material.dart';
 
 class GameTileScreen extends StatelessWidget {
@@ -15,7 +16,8 @@ class GameTileScreen extends StatelessWidget {
         child: SingleChildScrollView(
           child: Column(
             children: [
-              PlayerStats(),
+              PlayerStats(gameData: gameData),
+              ScoreUpdater(),
             ],
           ),
         ),

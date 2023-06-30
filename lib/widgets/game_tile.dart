@@ -16,14 +16,26 @@ class _GameTileState extends State<GameTile> {
       elevation: 2,
       color: const Color.fromARGB(219, 226, 197, 253),
       child: ListTile(
+        leading: Icon(Icons.gamepad),
+        tileColor: Color.fromARGB(245, 185, 128, 255),
         title: Text(
           gametitle,
-          style: Theme.of(context)
-              .textTheme
-              .bodyLarge!
-              .copyWith(fontWeight: FontWeight.bold, fontSize: 17),
+          style: Theme.of(context).textTheme.bodyLarge!.copyWith(
+              fontWeight: FontWeight.bold, fontSize: 17, color: Colors.white),
         ),
-        subtitle: const Text('Game played by the Boyz'),
+        subtitle: Row(
+          children: [
+            Text(
+              'Subtitle',
+              style: Theme.of(context)
+                  .textTheme
+                  .bodyMedium!
+                  .copyWith(color: Colors.white),
+            ),
+            Expanded(child: Container()),
+            Icon(Icons.format_list_numbered_sharp)
+          ],
+        ),
         onTap: () {
           Navigator.push(
             context,

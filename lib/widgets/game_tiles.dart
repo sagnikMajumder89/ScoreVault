@@ -60,10 +60,11 @@ class _GameTilesState extends State<GameTiles> {
           final loadedData = snapshots.data!.docs;
           final loadedGames = [];
           for (var i = 0; i < loadedData.length; i++) {
-            final l = loadedData[i].data()['listofusers'] as List;
-            print(username);
-            if (l.contains(username)) {
-              loadedGames.add(loadedData[i].data());
+            final l = loadedData[i].data()['listofusers'];
+            for (var index = 0; index < l.length; index++) {
+              if (l[index]['username'] == username) {
+                loadedGames.add(loadedData[i].data());
+              }
             }
           }
           if (loadedGames.isEmpty) {

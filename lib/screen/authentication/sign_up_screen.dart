@@ -2,6 +2,7 @@ import 'package:badam_saath/screen/authentication/login_screen.dart';
 import 'package:badam_saath/widgets/image_input.dart';
 import 'package:badam_saath/widgets/splash.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'dart:io';
@@ -26,9 +27,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
   }
 
   void submitData() async {
-    // if (!_formKey.currentState!.validate()) {
-    //   return;
-    // }
+    if (!_formKey.currentState!.validate()) {
+      return;
+    }
     if (_selectedImage == null) {
       await showDialog(
           context: context,
@@ -52,22 +53,30 @@ class _SignUpScreenState extends State<SignUpScreen> {
     setState(() {
       isAuthentication = true;
     });
-    // try {
-    //   await FirebaseAuth.instance.createUserWithEmailAndPassword(
-    //       email: enteredEmail, password: enteredPassword);
-    //   await FirebaseFirestore.instance
-    //       .collection('users')
-    //       .doc(FirebaseAuth.instance.currentUser!.uid)
-    //       .set({
-    //     'username': enteredUsername,
-    //     'email': enteredEmail,
-    //     'userid': FirebaseAuth.instance.currentUser!.uid
-    //   });
-    // } on FirebaseAuthException catch (error) {
-    //   ScaffoldMessenger.of(context).clearSnackBars();
-    //   ScaffoldMessenger.of(context).showSnackBar(
-    //       SnackBar(content: Text(error.message ?? "Authentication error")));
-    // }
+    try {
+      final userCredentials = await FirebaseAuth.instance
+          .createUserWithEmailAndPassword(
+              email: enteredEmail, password: enteredPassword);
+      final storageRef = FirebaseStorage.instance
+          .ref()
+          .child('userimage')
+          .child('${userCredentials.user!.uid}.jpg');
+      await storageRef.putFile(_selectedImage!);
+      final imageUrl = await storageRef.getDownloadURL();
+      await FirebaseFirestore.instance
+          .collection('users')
+          .doc(FirebaseAuth.instance.currentUser!.uid)
+          .set({
+        'username': enteredUsername,
+        'email': enteredEmail,
+        'userid': FirebaseAuth.instance.currentUser!.uid,
+        'userimage': imageUrl
+      });
+    } on FirebaseAuthException catch (error) {
+      ScaffoldMessenger.of(context).clearSnackBars();
+      ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text(error.message ?? "Authentication error")));
+    }
     setState(() {
       isAuthentication = false;
     });
