@@ -50,16 +50,15 @@ class DefaultFirebaseOptions {
   }
 
   static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyAHBLUfKEJEP25EvuwsIZ87ufRrOFUS0qo',
+    apiKey: '',
     appId: '1:711929761707:android:71baadb4a90386a7f78cee',
     messagingSenderId: '711929761707',
     projectId: 'badam-saath',
     storageBucket: 'badam-saath.appspot.com',
   );
-
   static const FirebaseOptions ios = FirebaseOptions(
-    apiKey: 'AIzaSyD8AjLZYqLfGkEAk4HUN1uIRH2h_WsP0tM',
-    appId: '1:711929761707:ios:01d6ad4b1d3b6f50f78cee',
+    apiKey: '',
+    appId: '',
     messagingSenderId: '711929761707',
     projectId: 'badam-saath',
     storageBucket: 'badam-saath.appspot.com',
